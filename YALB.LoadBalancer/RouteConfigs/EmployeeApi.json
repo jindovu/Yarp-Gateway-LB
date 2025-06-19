@@ -1,0 +1,30 @@
+{
+  "ReverseProxy": {
+    "Routes": {
+      "employee-routes": {
+        "ClusterId": "employee-cluster",
+        "Match": {
+          "Path": "/employee/{**catch-all}"
+        },
+        "Transforms": [
+          {
+            "PathRemovePrefix": "/employee"
+          }
+        ]
+      }
+    },
+    "Clusters": {
+      "employee-cluster": {
+        "Destinations": {
+          "Destination1": {
+            "Address": "http://yalb.api:8080/api/Employee"
+          },
+          "Destination2": {
+            "Address": "http://yalb-two.api:8080/api/Employee"
+          }
+        },
+        "LoadBalancingPolicy": "RoundRobin"
+      }
+    }
+  }
+}
